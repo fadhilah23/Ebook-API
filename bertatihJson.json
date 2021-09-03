@@ -1,0 +1,20 @@
+{
+     "nama"    :"Fadhih" ,
+     "kelas"   : "12 RPL 2",
+     "Semester": 1,
+     "Hobby"   : ["makan","nonton drama"],
+     "Mapel"   : {
+               "kk2" : "database",
+               "kk4" : "mobile dan web"
+         }
+} ,
+{
+     "nama"    :"Fadhih" ,
+     "kelas"   : "12 RPL 2",
+     "Semester": 1,
+     "Hobby"   : ["makan","nonton drama"],
+     "Mapel"   : {
+               "kk2" : "database",
+               "kk4" : "mobile dan web"
+         }
+} ]
