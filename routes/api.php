@@ -1,11 +1,10 @@
 <?php
 
+use App\Http\Controllers\BookController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\BookController;
-use GuzzleHttp\Promise\create;
 use App\Http\Controllers\AuthorController;
-
+use App\Http\Controllers\AuthController;
 
 /*
 |--------------------------------------------------------------------------
@@ -19,14 +18,43 @@ use App\Http\Controllers\AuthorController;
 */
 
 Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
+  return $request->user();
 });
 
-// Route::get('/book',[BookController::class, 'index']);
-// Route::post('/book',[BookController::class, 'store']);
-// Route::get('/book/{id}',[BookController::class, 'show']);
-// Route::put('/book/{id}',[BookController::class, 'update']);
-// Route::delete('/book/{id}',[BookController::class, 'destroy']);
+// Route::get('/me', [AuthController::class, 'me']);
 
-Route::resource('Book',BookController::class)->except('create','edit');
-Route::resource('authors', AuthorController::class);
+// Route::get('/books', [BookController::class, 'index']);
+// Route::post('/books', [BookController::class, 'store']);
+// Route::get('/books{id}', [BookController::class, 'show']);
+// Route::put('/books{id}', [BookController::class, 'update']);
+// Route::delete('/books{id}', [BookController::class, 'destroy']);
+
+//Route::resource('/books', BookController::class)->except('create', 'edit');
+
+//Route::resource('/authors', AuthorController::class)->except('create', 'edit');
+
+// Login Register
+Route::post('/register', [AuthController::class, 'register']);
+Route::post('/login', [AuthController::class, 'login']);
+
+/* Authors Books*/
+// Public
+Route::get('/books', [BookController::class, 'index']);
+Route::get('/books/{id}', [BookController::class, 'show']);
+Route::get('/books/search/{title}', [BookController::class, 'search']);
+
+Route::get('/authors', [AuthorController::class, 'index']);
+Route::get('/authors/{id}', [AuthorController::class, 'show']);
+Route::get('/authors/search/{name}', [AuthorController::class, 'search']);
+
+// Protected
+Route::middleware(['auth:sanctum'])->group(function () {
+Route::post('/books', [BookController::class, 'store']);
+Route::put('/books/{id}', [BookController::class, 'update']);
+Route::delete('/books/{id}', [BookController::class, 'destroy']);
+
+Route::post('/authors', [AuthorController::class, 'store']);
+Route::put('/authors/{id}', [AuthorController::class, 'update']);
+Route::delete('/authors/{id}', [AuthorController::class, 'destroy']);
+Route::post('/logout', [AuthController::class, 'logout']);
+});
